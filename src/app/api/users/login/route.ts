@@ -50,7 +50,7 @@ export async function POST(req: NextRequest) {
       message: "Login Successsful",
       success: true,
     });
-    response.cookies.set("token", token, { httpOnly: true });
+    response.cookies.set("token", token, { httpOnly: true, secure: true });
 
     return response;
   } catch (error: any) {
