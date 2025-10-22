@@ -4,9 +4,12 @@ import Link from "next/link";
 import React, { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
+import { useUser } from "@/context/UserContext";
+
 
 function SignUpPage() {
   const router = useRouter();
+   const { setEmail } = useUser();
 
   const [user, setUser] = React.useState({
     username: "",
@@ -25,6 +28,7 @@ function SignUpPage() {
       user.password.trim().length > 0
     ) {
       setBtnDisabled(false);
+      setEmail(user.email);
     } else {
       setBtnDisabled(true);
     }
@@ -47,7 +51,7 @@ function SignUpPage() {
       setLoading(true);
       const res = await axios.post("/api/users/signup", user);
       console.log("Signup Successful:", res.data);
-      router.push("/login");
+      router.push("/verifyYourPage");
     } catch (error: any) {
       console.log(
         "Signup failed",
@@ -129,7 +133,7 @@ function SignUpPage() {
           <p className="text-center text-sm text-gray-400 mt-4">
             Already have an account?{" "}
             <Link
-              href="/login"
+              href="/profile"
               className="text-indigo-400 hover:underline font-medium"
             >
               Log in
